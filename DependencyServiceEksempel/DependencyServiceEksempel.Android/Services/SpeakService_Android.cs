@@ -14,35 +14,58 @@ using System.Text;
 using Android.Speech.Tts;
 using Java.Util;
 
-[assembly: Dependency(nameof(SpeakService_Android),LoadHint.Always)]
 namespace DependencyServiceEksempel.Droid.Services
 {
-    public class SpeakService_Android : ISpeakService
+    public class SpeakService_Android : Java.Lang.Object, ISpeakService, TextToSpeech.IOnInitListener
     {
+        TextToSpeech speaker;
+        string toSpeak;
 
         public SpeakService_Android()
         {
             
         }
 
-        public void speak(string text,Locale locale = null,int speed = 1,int pitch = 1)
+        public void OnInit([GeneratedEnum] OperationResult status)
         {
-            TextToSpeech tts = new TextToSpeech(Application.Context,this);
-
-            if (locale == null)
+            if (status.Equals(OperationResult.Success))
             {
-                tts.SetLanguage(Locale.Default);
+                var p = new Dictionary<string, string>();
+                speaker.Speak(toSpeak, QueueMode.Flush, p);
+            }
+        }
+
+        public void speak(string text,int speed = 1,int pitch = 1, string locale = null)
+        {
+            toSpeak = text;
+            if (speaker == null)
+            {
+                speaker = new TextToSpeech(Application.Context, this);
+                if (locale == null)
+                {
+                    speaker.SetLanguage(Locale.Default);
+                }
+                else
+                {
+                    var SelectedLocale = Locale.ForLanguageTag(locale);
+                    if (locale != null)
+                    {
+                        speaker.SetLanguage(SelectedLocale);
+                    }
+                    else
+                    {
+                        speaker.SetLanguage(Locale.Default);
+                    }
+                }
+
+                speaker.SetPitch(pitch);
+                speaker.SetSpeechRate(speed);
             }
             else
             {
-                tts.SetLanguage(locale);
+                var p = new Dictionary<string, string>();
+                speaker.Speak(toSpeak, QueueMode.Flush, p);
             }
-
-            tts.SetPitch(pitch);
-            tts.SetSpeechRate(speed);
-            var p = new Dictionary<string, string>();
-            tts.Speak(text, QueueMode.Flush, p);
-
         }
     }
 }

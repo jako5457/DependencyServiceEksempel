@@ -4,6 +4,9 @@ using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
+using Xamarin.Forms;
+using DependencyServiceEksempel.Services;
+using DependencyServiceEksempel.Droid.Services;
 
 namespace DependencyServiceEksempel.Droid
 {
@@ -13,6 +16,8 @@ namespace DependencyServiceEksempel.Droid
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+
+            DependencyService.Register<ISpeakService, SpeakService_Android>();
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);

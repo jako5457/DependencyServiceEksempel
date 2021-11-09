@@ -6,6 +6,6 @@ namespace DependencyServiceEksempel.Services
 {
     public interface ISpeakService
     {
-        void speak(string text);
+        void speak(string text, int speed = 1, int pitch = 1, string locale = null);
     }
 }
