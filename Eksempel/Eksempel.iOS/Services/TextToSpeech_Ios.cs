@@ -11,7 +11,7 @@ using UIKit;
 [assembly: Xamarin.Forms.Dependency(typeof(TextToSpeech_Ios))]
 namespace Eksempel.iOS.Services
 {
-    class TextToSpeech_Ios : ITextToSpeech
+    public class TextToSpeech_Ios : ITextToSpeech
     {
         public void Speak(string text)
         {
