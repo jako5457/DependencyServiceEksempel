@@ -11,7 +11,7 @@ namespace Eksempel.ViewModels
         public AboutViewModel()
         {
             Title = "About";
-            OpenWebCommand = new Command(() => DependencyService.Get<ITextToSpeech>().Speak("Hello from xamarin forms"));
+            OpenWebCommand = new Command(() => DependencyService.Get<ITextToSpeech>().Speak("Start developing now. Make changes to your XAML file and save to see your UI update in the running app with XAML Hot Reload. Give it a try! Learn more at https://aka.ms/xamarin-quickstart"));
         }
 
         public ICommand OpenWebCommand { get; }
